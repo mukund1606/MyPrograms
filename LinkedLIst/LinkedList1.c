@@ -21,11 +21,17 @@ void push(struct Node** head_ref, int new_data){
     (*head_ref) = new_node;    
 }
 
-void add(struct Node** prev_node, int new_data){
+
+//Adding Node to end
+void add(struct Node** node, int new_data){
     struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));
+    struct Node* temp = *node;
+    while(temp->next != NULL){
+        temp = temp->next;
+    }
     new_node->data = new_data;
     new_node->next = NULL;
-    (*prev_node)->next = new_node;
+    (temp)->next = new_node;
 }
 
 int main(){
@@ -48,7 +54,9 @@ int main(){
     third->next = NULL;
 
     // push(&head, 23);
-    add(&third, 5);
+    add(&head, 5);
+    add(&second, 6);
+    add(&head, 8);
     // printf("%d", head);
     printList(head);
 
