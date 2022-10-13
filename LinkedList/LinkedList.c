@@ -18,7 +18,6 @@ void traverseList(struct Node *start_node){
             printf("%d ", temp->data);
             temp = temp->next_node;
         }
-        free(temp);
     }
     printf("\n");
 }
@@ -29,7 +28,6 @@ void insertStart(struct Node **start_node, int data){
     temp->data = data;
     temp->next_node = *start_node;
     *start_node = temp;
-    free(temp);
 }
 
 void insertEnd(struct Node **start_node, int data){
@@ -47,8 +45,6 @@ void insertEnd(struct Node **start_node, int data){
         }
         temp2->next_node = temp;
     }
-    free(temp);
-    free(temp2);
 }
 
 void insert(struct Node **start_node, int data){
@@ -73,7 +69,6 @@ void insert(struct Node **start_node, int data){
             temp2->next_node = temp;
         }
     }
-    free(temp);
 }
 
 void delete(struct Node **start_node, int data){
