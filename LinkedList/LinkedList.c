@@ -3,93 +3,93 @@
 
 struct Node{
     int data;
-    struct Node* next_node;
+    struct Node* ptr;
 };
 
-void traverseList(struct Node *start_node){
-    if(start_node == NULL){
+void traverseList(struct Node *start){
+    if(start == NULL){
         printf("Empty Linked List");
     }
     else{
         struct Node *temp;
         temp = (struct Node*)malloc(sizeof(struct Node));
-        temp = start_node;
+        temp = start;
         while(temp != NULL){
             printf("%d ", temp->data);
-            temp = temp->next_node;
+            temp = temp->ptr;
         }
     }
     printf("\n");
 }
 
-void insertStart(struct Node **start_node, int data){
+void insertStart(struct Node **start, int data){
     struct Node *temp;
     temp = (struct Node*)malloc(sizeof(struct Node));
     temp->data = data;
-    temp->next_node = *start_node;
-    *start_node = temp;
+    temp->ptr = *start;
+    *start = temp;
 }
 
-void insertEnd(struct Node **start_node, int data){
+void insertEnd(struct Node **start, int data){
     struct Node *temp, *temp2;
     temp = (struct Node*)malloc(sizeof(struct Node));
     temp->data = data;
-    temp->next_node = NULL;
-    if(*start_node == NULL){
-        *start_node = temp;
+    temp->ptr = NULL;
+    if(*start == NULL){
+        *start = temp;
     }
     else{
-        temp2 = *start_node;
-        while(temp2->next_node != NULL){
-            temp2 = temp2->next_node;
+        temp2 = *start;
+        while(temp2->ptr != NULL){
+            temp2 = temp2->ptr;
         }
-        temp2->next_node = temp;
+        temp2->ptr = temp;
     }
 }
 
-void insert(struct Node **start_node, int data){
+void insert(struct Node **start, int data){
     struct Node *temp, *temp2;
     temp = (struct Node*)malloc(sizeof(struct Node));
     temp->data = data;
-    temp->next_node = NULL;
-    if(*start_node == NULL){
-        *start_node = temp;
+    temp->ptr = NULL;
+    if(*start == NULL){
+        *start = temp;
     }
     else{
-        temp2 = *start_node;
+        temp2 = *start;
         if(temp2->data > data){
-            temp->next_node = temp2;
-            *start_node = temp;
+            temp->ptr = temp2;
+            *start = temp;
         }
         else{
-            while(temp2->next_node != NULL && temp2->next_node->data < data){
-                temp2 = temp2->next_node;
+            while(temp2->ptr != NULL && temp2->ptr->data < data){
+                temp2 = temp2->ptr;
             }
-            temp->next_node = temp2->next_node;
-            temp2->next_node = temp;
+            temp->ptr = temp2->ptr;
+            temp2->ptr = temp;
         }
     }
 }
 
-void delete(struct Node **start_node, int data){
+void delete(struct Node **start, int data){
     struct Node *temp, *temp2;
     temp = (struct Node*)malloc(sizeof(struct Node));
-    if(start_node == NULL){
+    if(start == NULL){
         printf("Underflow\n");
     }
     else{
-        temp = *start_node;
+        temp = *start;
         if(temp->data == data){
-            *start_node = temp->next_node;
+            *start = temp->ptr;
             printf("Element Deleted is %d\n", temp->data);
         }
         else{
-            while(temp->data != data && temp->next_node != NULL){
+            while(temp->data != data && temp->ptr != NULL){
                 temp2 = temp;
-                temp = temp->next_node;
+                temp = temp->ptr;
             }
             if(temp->data == data){
-                temp2->next_node = temp->next_node;
+                temp2->ptr = temp->ptr;
                 printf("Element Deleted is %d\n", temp->data);
             }
             else{
@@ -100,40 +100,41 @@ void delete(struct Node **start_node, int data){
 }
 
 int main(){
-    struct Node *first = NULL;
+    struct Node *start = NULL;
     struct Node *second = NULL;
-    struct Node *third = NULL;
+    struct Node *last = NULL;
 
-    first = (struct Node*)malloc(sizeof(struct Node));
+    start = (struct Node*)malloc(sizeof(struct Node));
     second = (struct Node*)malloc(sizeof(struct Node));
-    third = (struct Node*)malloc(sizeof(struct Node));
+    last = (struct Node*)malloc(sizeof(struct Node));
 
-    first->data = 5;
+    scanf("%d", &start->data);
+    start->data = 5;
     second->data = 7;
-    third->data = 8;
+    last->data = 8;
 
-    first->next_node = second;
-    second->next_node = third;
-    third->next_node = NULL;
+    start->ptr = second;
+    second->ptr = last;
+    last->ptr = NULL;
     
     printf("\nOriginal Linked List: ");
-    traverseList(first);
+    traverseList(start);
 
-    insertEnd(&first, 1);
-    insert(&first, 15);
-    insertStart(&first, 7);
+    insertEnd(&start, 1);
+    insert(&start, 15);
+    insertStart(&start, 7);
 
     printf("\n\nLinked List After Insertion: ");
-    traverseList(first);
+    traverseList(start);
 
     printf("\n\n");
-    delete(&first, 1);
-    delete(&first, 7);
-    delete(&first, 9);
+    delete(&start, 1);
+    delete(&start, 7);
+    delete(&start, 9);
     delete(NULL, 9);
     
     printf("\n\nLinked List After Deletion: ");
-    traverseList(first);
+    traverseList(start);
 
 
     return 0;
